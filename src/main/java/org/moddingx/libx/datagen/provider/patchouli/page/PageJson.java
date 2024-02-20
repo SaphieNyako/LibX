@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
  */
 public class PageJson {
 
+
+    private static final int MAX_LINES = 15;
     /**
      * Gets a {@link JsonElement} that represents the given {@link ItemStack} in the format, patchouli requires it.
      */
@@ -55,7 +57,7 @@ public class PageJson {
      *                 entry header.
      */
     public static List<String> splitText(String text, boolean withInit) {
-        return splitText(text, withInit ? 14 : 16, 16);
+        return splitText(text, withInit ? 13 : MAX_LINES, MAX_LINES);
     }
 
     /**
@@ -64,7 +66,7 @@ public class PageJson {
      * @param skip How many lines, the first page should be shorter that usual.
      */
     public static List<String> splitText(String text, int skip) {
-        return splitText(text, Math.max(16 - skip, 1), 16);
+        return splitText(text, Math.max(MAX_LINES - skip, 1), MAX_LINES);
     }
     
     /**
