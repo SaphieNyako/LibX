@@ -10,16 +10,26 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class EntityContent extends CaptionContent {
-    
+
     private final EntityType<?> entity;
+    private final Float scale;
+    private final Float offset;
+    private final Boolean rotate;
 
     public EntityContent(EntityType<?> entity) {
-        this(entity, null);
+        this(entity, null, null, null, null);
     }
-    
-    private EntityContent(EntityType<?> entity, @Nullable String caption) {
+
+    public EntityContent(EntityType<?> entity, @Nullable Float scale, @Nullable Float offset, @Nullable Boolean rotate){
+        this(entity, null, scale, offset, rotate);
+    }
+
+    private EntityContent(EntityType<?> entity, @Nullable String caption, @Nullable Float scale, @Nullable Float offset, @Nullable Boolean rotate) {
         super(caption);
         this.entity = entity;
+        this.scale = scale;
+        this.offset = offset;
+        this.rotate = rotate;
     }
 
     @Override
@@ -29,7 +39,7 @@ public class EntityContent extends CaptionContent {
 
     @Override
     protected CaptionContent withCaption(String caption) {
-        return new EntityContent(this.entity, caption);
+        return new EntityContent(this.entity, caption, this.scale, this.offset, this.rotate);
     }
 
     @Override
@@ -39,6 +49,15 @@ public class EntityContent extends CaptionContent {
         json.addProperty("entity", Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(this.entity), "Entity not registered: " + this.entity).toString());
         if (caption != null) {
             json.addProperty("text", builder.translate(caption));
+        }
+        if (scale != null) {
+            json.addProperty("scale", this.scale);
+        }
+        if (offset != null) {
+            json.addProperty("offset", this.offset);
+        }
+        if (rotate != null) {
+            json.addProperty("rotate", this.rotate);
         }
         builder.addPage(json);
     }

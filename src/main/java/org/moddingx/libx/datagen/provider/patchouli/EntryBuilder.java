@@ -216,8 +216,8 @@ public class EntryBuilder {
     /**
      * Adds some content to the entry that display the given entity.
      */
-    public EntryBuilder entity(EntityType<?> entity) {
-        return this.add(new EntityContent(entity));
+    public EntryBuilder entity(EntityType<?> entity, Float scale, Float offset, Boolean rotate) {
+        return this.add(new EntityContent(entity, scale, offset,rotate));
     }
 
     /**
